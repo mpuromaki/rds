@@ -96,3 +96,5 @@ But if the trusted RDS Server has at least one home announce, it can start worki
 
 The trusted RDS server sends ```RDS Services Request``` to the RDS home server listed in the home announce. The RDS home server responds with ```RDS Services Response```, which this trusted server caches for subsequent requests.
 Then this trusted RDS server responds to the user with the information provided in that services response.
+
+Finally this means that the user has Reticulum identities for the requested aspect. This allows the user to calculate Reticulum Destination Hash, which can then be used to connect directly to the service the user was trying to find.
