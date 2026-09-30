@@ -74,6 +74,8 @@ First these RDS servers send announces with aspect ```rds.server``` to the Retic
 
 Then RDS servers acting as a home start sending those ```RDS Home Announce``` records to other RDS servers. I've not yet chosen how to do this, likely over lxmf somehow. Since those records already contain all of the relevant information as a signed packet, this allows RDS servers to start gathering information on where to find details about specific organizations if need arises. Those records contain the organization name and it's identity, so name collisions will become apparent at this point. How to manage those name collisions is largely social problem which can be, at least partially, handled between RDS server operators.
 
+Having RDS servers at all, and having them peer with each other is necessary for couple of reasons. The first reason is to limit bandwith requirement of this name-to-identity mapping system. The home announcements could be part of normal announcements to every user, but that would waste so much bandwith and storage from users that are unlikely to need that information. Secondly it makes the user experience much better: since the RDS servers have been constantly listening for announces over long period of time, they have much better view of what's available and where to find the services.
+
 Now there's a technical detail I've not yet solved: How to decide what home announce send to where. Likely there are some algorithms which can make better use of bandwith than just flooding every record to every known RDS server. Especially when the situation stabilizes and new Home Announces become less frequent.
 
 ### How users request records from RDS
