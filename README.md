@@ -89,7 +89,7 @@ From this point there are two options. Either the trusted RDS already has the in
 
 In this case the trusted RDS server already knows the requested organization name, knows what organization identity it belongs to and has recent records of identities providing the requested aspects. The RDS server just sends back ```RDS Services Response``` message back to the user which contains all ```RDS Service``` records for identities which provide the requested aspect. There could be none, one or even multiple.
 
-### Cache miss, RDS doesn't have relevant records
+#### Cache miss, RDS doesn't have relevant records
 
 In this case the trusted RDS server doesn't have the relevant records locally cached. If the RDS server doesn't have any ```RDS Home``` records cached for that name either, then it must respond with an error of unknown organization.
 But if the trusted RDS Server has at least one home record, it can start working on gathering the required details.
