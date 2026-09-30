@@ -82,7 +82,7 @@ Now there's a technical detail I've not yet solved: How to decide what home anno
 
 As with the servers, the users themselves need to already trust some RDS server they want to send requests to. This could be an RDS server owned by the same network identity that owns some local transport nodes for example.
 
-The of course the user needs to have a situation where it knows about service it wants to access (like nomadnet.node for rns.recipes over nomadnet), but which it doesn't know the identity or destinations of. So the user sends ```RDS Services Request``` to the trusted RDS.
+The of course the user needs to have a situation where it knows about service it wants to access (like nomadnet.node for rns.recipes), but which it doesn't know the identity or destinations of. So the user sends ```RDS Services Request``` to the trusted RDS.
 From this point there are two options. Either the trusted RDS already has the information, or it doesn't.
 
 #### Cache hit, RDS has the relevant records
