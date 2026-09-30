@@ -60,7 +60,7 @@ First the organization needs to create identity pair that acts as the owner of t
 
 Then the organization needs to have selected an RDS they trust. This is social choice and very likely out-of-band. It could be hosted by the organization itself, or some local community for example. It could match the network identity that is providing connectivity.
 
-With this setup the organization creates ```RDS Home Announce``` record, which contains identity of the chosen RDS home server, chosen name of the organisation, identity of the organization and signature over those. This record is then sent to the RDS home server, so that they can start peering that information to other RDS servers. And of course RDS server doesn't have to accept that record, instead there would be some out-of-band method for the RDS server to become home of that specific organization identity with that specific name. RDS server would also validate signatures etc of that home announce record.
+With this setup the organization creates ```RDS Home``` record, which contains identity of the chosen RDS home server, chosen name of the organization, identity of the organization and signature over those. This record is then sent to the RDS home server, so that they can start peering that information to other RDS servers. And of course RDS server doesn't have to accept that record, instead there would be some out-of-band method for the RDS server to become home of that specific organization identity with that specific name. RDS server would also validate signatures etc of that home record.
 
 Finally the organization could send additional ```RDS Service``` records, which contain Reticulum identities and what aspects they provide, signed by this organization identity.
 
@@ -72,11 +72,11 @@ So at this point we have multiple RDS servers available within the network, with
 
 First these RDS servers send announces with aspect ```rds.server``` to the Reticulum network. Respecting Reticulum's guidance on announce frequencies of course. This way over time RDS servers will gather knowledge of other RDS servers. Likely that announce's app data should contain some contact information for the administrator of that server, just so that RDS servers can communicate if necessary.
 
-Then RDS servers acting as a home start sending those ```RDS Home Announce``` records to other RDS servers. I've not yet chosen how to do this, likely over lxmf somehow. Since those records already contain all of the relevant information as a signed packet, this allows RDS servers to start gathering information on where to find details about specific organizations if need arises. Those records contain the organization name and it's identity, so name collisions will become apparent at this point. How to manage those name collisions is largely social problem which can be, at least partially, handled between RDS server operators.
+Then RDS servers acting as a home start sending those ```RDS Home``` records to other RDS servers. I've not yet chosen how to do this, likely over lxmf somehow. Since those records already contain all of the relevant information as a signed packet, this allows RDS servers to start gathering information on where to find details about specific organizations if need arises. Those records contain the organization name and it's identity, so name collisions will become apparent at this point. How to manage those name collisions is largely social problem which can be, at least partially, handled between RDS server operators.
 
-Having RDS servers at all, and having them peer with each other is necessary for couple of reasons. The first reason is to limit bandwith requirement of this name-to-identity mapping system. The home announcements could be part of normal announcements to every user, but that would waste so much bandwith and storage from users that are unlikely to need that information. Secondly it makes the user experience much better: since the RDS servers have been constantly listening for announces over long period of time, they have much better view of what's available and where to find the services.
+Having RDS servers at all, and having them peer with each other is necessary for couple of reasons. The first reason is to limit bandwidth requirement of this name-to-identity mapping system. The home records could be part of normal announcements to every user, but that would waste so much bandwidth and storage from users that are unlikely to need that information. Secondly it makes the user experience much better: since the RDS servers have been constantly listening for announces over long period of time, they have much better view of what's available and where to find the services.
 
-Now there's a technical detail I've not yet solved: How to decide what home announce send to where. Likely there are some algorithms which can make better use of bandwith than just flooding every record to every known RDS server. Especially when the situation stabilizes and new Home Announces become less frequent.
+Now there's a technical detail I've not yet solved: How to decide what home record send to where. Likely there are some algorithms which can make better use of bandwidth than just flooding every record to every known RDS server. Especially when the situation stabilizes and new Home records become less frequent.
 
 ### How users request records from RDS
 
@@ -91,10 +91,10 @@ In this case the trusted RDS server already knows the requested organization nam
 
 ### Cache miss, RDS doesn't have relevant records
 
-In this case the trusted RDS server doesn't have the relevat records locally cached. If the RDS server doesn't have any ```RDS Home Announce```'s cached for that name either, then it must respond with an error of unknown organization.
-But if the trusted RDS Server has at least one home announce, it can start working on gathering the required details.
+In this case the trusted RDS server doesn't have the relevant records locally cached. If the RDS server doesn't have any ```RDS Home``` records cached for that name either, then it must respond with an error of unknown organization.
+But if the trusted RDS Server has at least one home record, it can start working on gathering the required details.
 
-The trusted RDS server sends ```RDS Services Request``` to the RDS home server listed in the home announce. The RDS home server responds with ```RDS Services Response```, which this trusted server caches for subsequent requests.
+The trusted RDS server sends ```RDS Services Request``` to the RDS home server listed in the home record. The RDS home server responds with ```RDS Services Response```, which this trusted server caches for subsequent requests.
 Then this trusted RDS server responds to the user with the information provided in that services response.
 
 Finally this means that the user has Reticulum identities for the requested aspect. This allows the user to calculate Reticulum Destination Hash, which can then be used to connect directly to the service the user was trying to find.
