@@ -1,3 +1,5 @@
+:warning: Just a friendly reminder that this document is thoughts of a single person. I've started some discussions about this and it seems that there might be fundamental issues both with this approach and directory services for Reticulum in general. I haven't yet been able to think through all of the responses. When that's done, I'll update / archive / delete this document.
+
 # rds - Reticulum Directory Services
 Reticulum Directory Services is proposal for name to identity mapping system which fits the zen of reticulum.
 
